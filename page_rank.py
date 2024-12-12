@@ -7,15 +7,7 @@ from collections import defaultdict
 
 
 def load_graph(args):
-    """Load graph from text file
-
-    Parameters:
-    args -- arguments named tuple
-
-    Returns:
-    A dict mapling a URL (str) to a list of target URLs (str).
-    """
-
+    
     num_lines = args.datafile
 
     # Initialise an empty graph
@@ -32,7 +24,6 @@ def load_graph(args):
 
 
 def print_stats(graph):
-    """Print number of nodes and edges in the given graph"""
     # Assign the number of nodes in the graph to a variable
     num_nodes = len(graph)
     
@@ -46,20 +37,7 @@ def print_stats(graph):
 
 
 def stochastic_page_rank(graph, args):
-    """Stochastic PageRank estimation
-
-    Parameters:
-    graph -- a graph object as returned by load_graph()
-    args -- arguments named tuple
-
-    Returns:
-    A dict that assigns each page its hit frequency
-
-    This function estimates the Page Rank by counting how frequently
-    a random walk that starts on a random node will after n_steps end
-    on each node of the given graph.
-    """
-
+    
     # Number of steps in each walk
     num_steps = args.steps
     # How many random walks to perform
@@ -91,24 +69,10 @@ def stochastic_page_rank(graph, args):
             # Increase the hit count for the new node
             hit_count[current_node] += 1
         
-
     return hit_count
 
 
 def distribution_page_rank(graph, args):
-    """Probabilistic PageRank estimation
-
-    Parameters:
-    graph -- a graph object as returned by load_graph()
-    args -- arguments named tuple
-
-    Returns:
-    A dict that assigns each page its probability to be reached
-
-    This function estimates the Page Rank by iteratively calculating
-    the probability that a random walker is currently on any node.
-    """
-    
     # Number of iterations
     n_steps = args.steps
     
@@ -118,7 +82,6 @@ def distribution_page_rank(graph, args):
 
     # Repeat for the number of iterations
     for _ in range(n_steps):
-
         # Initialise the probabilities to zero
         next_prob = {node: 0 for node in graph}
         
@@ -128,6 +91,7 @@ def distribution_page_rank(graph, args):
             out_degree = len(graph[node])
             # Each outgoing edge gets an equal share of the node's probability
             p = node_prob[node] / out_degree
+            
             for target in graph[node]:
                 next_prob[target] += p
 
