@@ -33,3 +33,6 @@ number of steps a walker takes
 number of results shown
 
 All of the above steps from the help menu worked as intended during testing
+
+In case the git file is not viewable, here is the github link to the repository which should suffice in its place:
+https://github.com/Daniel-A-O/CaseStudy3
