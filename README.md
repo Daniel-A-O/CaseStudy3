@@ -8,6 +8,8 @@ Example; line 65: num_steps = args.steps
 Changed page_rank so that the outdegree is computer once pre-iteration to increase the speed slightly as it does not need to be calculated for each node every time.
 ~ Line 72-90. Edited in the commit "Changed stochastic_pank_rank to compute each node pre-iteration"
 
+Tested filtering out data so that only the top n rows would be stored using heapq, this appeared to increase the amount of time it takes, as caching the data does not take much execution time, but adding the instruction to remove some data from the cache and replace it does
+
 Test Data:
 
 usage: page_rank.py [-h] [-m {stochastic,distribution}] [-r REPEATS]
