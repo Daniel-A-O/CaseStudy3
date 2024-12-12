@@ -23,7 +23,7 @@ def load_graph(args):
     # Iterate through the file line by line
     for line in args.datafile:
         # And split each line into two URLs 
-        node, target = line.split()
+        node, target = line.split().split # .strip() to remove any surrounding whitespace
         # Append the target URL to the node's list
         graph[node].append(target)
 
@@ -39,6 +39,7 @@ def print_stats(graph):
     # Edges are the total number of links for all nodes, so the sum of the length of all of the lists
     num_edges = sum(len(targets) for targets in graph.values())
 
+    # Print out the number of nodes and edges
     print(f"Number of nodes: {num_nodes}")
     print(f"Number of edges: {num_edges}")
 
@@ -58,7 +59,17 @@ def stochastic_page_rank(graph, args):
     a random walk that starts on a random node will after n_steps end
     on each node of the given graph.
     """
-    raise RuntimeError("This function is not implemented yet.")
+    num_steps = args.steps
+    num_repeats = args.repeats
+
+    # Initialise hit frequency dict for each node
+    hit_frequency = defaultdict(int)
+
+    # List of nodes for random walk
+    nodes = list(graph.keys())
+
+    # Random walks
+    for i in range(num_repeats):
 
 
 def distribution_page_rank(graph, args):
