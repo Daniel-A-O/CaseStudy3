@@ -23,20 +23,19 @@ def load_graph(args):
     # Iterate through the file line by line
     for line in args.datafile:
         # And split each line into two URLs 
-        node, target = line.split().split # .strip() to remove any surrounding whitespace
+        node, target = line.strip().split() # .strip() to remove any surrounding whitespace
         # Append the target URL to the node's list
         graph[node].append(target)
 
     return graph
-#
 
 
 def print_stats(graph):
     """Print number of nodes and edges in the given graph"""
-    # Nodes are the number of unique URLs, the keys in the graph dict
+    # Assign the number of nodes in the graph to a variable
     num_nodes = len(graph)
     
-    # Edges are the total number of links for all nodes, so the sum of the length of all of the lists
+    # Assign the number of edges in the graph to a variable
     num_edges = sum(len(targets) for targets in graph.values())
 
     # Print out the number of nodes and edges
@@ -59,17 +58,34 @@ def stochastic_page_rank(graph, args):
     a random walk that starts on a random node will after n_steps end
     on each node of the given graph.
     """
+
+    # Number of steps in each walk
     num_steps = args.steps
-    num_repeats = args.repeats
+    # How many random walks to perform
+    num_repeats = args.repeats  
 
-    # Initialise hit frequency dict for each node
-    hit_frequency = defaultdict(int)
-
-    # List of nodes for random walk
+    # A dictionary to store how many times each node is visited
+    hit_count = defaultdict(int)
+    # A list of all nodes in the graph
     nodes = list(graph.keys())
 
-    # Random walks
-    for i in range(num_repeats):
+    for _ in range(num_repeats):
+        # Start each walk from a random node and set the current node to the random node selected
+        current_node = random.choice(nodes)
+
+        for _ in range(num_steps):
+            # If the current node has no outgoing links
+            if not graph[current_node]:  
+                # Move to the next node in the walk
+                current_node = random.choice(nodes)
+            else:
+                # If there is an outgoing link, continue the walk by picking the next node
+                current_node = random.choice(graph[current_node])
+            
+            # Increase the hit count for the new node
+            hit_count[current_node] += 1
+
+    return hit_count
 
 
 def distribution_page_rank(graph, args):
