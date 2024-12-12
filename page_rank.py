@@ -17,11 +17,13 @@ def load_graph(args):
     A dict mapling a URL (str) to a list of target URLs (str).
     """
 
+    num_lines = args.datafile
+
     # Initialise an empty graph
     graph = defaultdict(list)
 
     # Iterate through the file line by line
-    for line in args.datafile:
+    for line in num_lines:
         # And split each line into two URLs 
         node, target = line.strip().split() # .strip() to remove any surrounding whitespace
         # Append the target URL to the node's list
