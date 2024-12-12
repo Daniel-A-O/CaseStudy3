@@ -2,7 +2,9 @@ import sys
 import os
 import time
 import argparse
+import random
 from progress import Progress
+from collections import defaultdict
 
 
 def load_graph(args):
@@ -14,11 +16,19 @@ def load_graph(args):
     Returns:
     A dict mapling a URL (str) to a list of target URLs (str).
     """
+
+    # Initialise an empty graph
+    graph = defaultdict(list)
+
     # Iterate through the file line by line
     for line in args.datafile:
-        # And split each line into two URLs
+        # And split each line into two URLs 
         node, target = line.split()
-        raise RuntimeError("This function is not implemented yet.")
+        # Append the target URL to the node's list
+        graph[node].append(target)
+
+    return graph
+#
 
 
 def print_stats(graph):
