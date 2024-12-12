@@ -32,8 +32,16 @@ def load_graph(args):
 
 
 def print_stats(graph):
-        """Print number of nodes and edges in the given graph"""
-        raise RuntimeError("This function is not implemented yet.")
+    """Print number of nodes and edges in the given graph"""
+    # Nodes are the number of unique URLs, the keys in the graph dict
+    num_nodes = len(graph)
+    
+    # Edges are the total number of links for all nodes, so the sum of the length of all of the lists
+    num_edges = sum(len(targets) for targets in graph.values())
+
+    print(f"Number of nodes: {num_nodes}")
+    print(f"Number of edges: {num_edges}")
+
 
 
 def stochastic_page_rank(graph, args):
