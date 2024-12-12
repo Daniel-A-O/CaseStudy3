@@ -1,9 +1,7 @@
 import sys
-import os
 import time
 import argparse
 import random
-from progress import Progress
 from collections import defaultdict
 
 
