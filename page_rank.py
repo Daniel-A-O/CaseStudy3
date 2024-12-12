@@ -2,6 +2,7 @@ import sys
 import time
 import argparse
 import random
+
 from collections import defaultdict
 
 
@@ -70,22 +71,26 @@ def stochastic_page_rank(graph, args):
     nodes = list(graph.keys())
     # Compute outdegree for each node pre-iteration
     outdegree = {node: len(targets) for node, targets in graph.items()}
+    
 
     for _ in range(num_repeats):
         # Start each walk from a random node and set the current node to the random node selected
         current_node = random.choice(nodes)
+        hit_count[current_node] += 1
 
         for _ in range(num_steps):
             # If the current node has no outgoing links
             if outdegree.get(current_node, 0) > 0:  
-                # Move to the next node in the walk
-                current_node = random.choice(nodes)
-            else:
-                # If there is an outgoing link, continue the walk by picking the next node
+                # If there is an outgoing link, continue the walk by picking the next node     
                 current_node = random.choice(graph[current_node])
+                
+            else:
+                # Move to the next random node in the walk
+                current_node = random.choice(nodes)
             
             # Increase the hit count for the new node
             hit_count[current_node] += 1
+        
 
     return hit_count
 
