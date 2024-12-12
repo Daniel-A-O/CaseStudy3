@@ -68,6 +68,8 @@ def stochastic_page_rank(graph, args):
     hit_count = defaultdict(int)
     # A list of all nodes in the graph
     nodes = list(graph.keys())
+    # Compute outdegree for each node pre-iteration
+    outdegree = {node: len(targets) for node, targets in graph.items()}
 
     for _ in range(num_repeats):
         # Start each walk from a random node and set the current node to the random node selected
@@ -75,7 +77,7 @@ def stochastic_page_rank(graph, args):
 
         for _ in range(num_steps):
             # If the current node has no outgoing links
-            if not graph[current_node]:  
+            if outdegree.get(current_node, 0) > 0:  
                 # Move to the next node in the walk
                 current_node = random.choice(nodes)
             else:
